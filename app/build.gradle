@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+	namespace "com.Yiming.PC"
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId 'com.Yiming.PC'
+        minSdkVersion 22
+        //noinspection ExpiringTargetSdkVersion,ExpiredTargetSdkVersion
+        targetSdkVersion 34
+        versionCode 17
+        versionName "1.8.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags '-std=c++17'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildFeatures {
+        buildConfig = false
+    }
+
+    externalNativeBuild {
+        cmake {
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
+
+    sourceSets {
+        main {
+            java {
+                setSrcDirs(['src/main/java'])
+                include 'com/Yiming/**'
+                include 'com/unity/**'
+                include 'com/unity3d/**'
+                include 'com/google/androidgamesdk/**'
+                include 'com/google/android/gms/games/Games.java'
+                include 'com/android/billingclient/api/PurchasesUpdatedListener.java'
+                include 'com/yasirkula/**'
+                include 'bitter/**'
+                include 'org/fmod/**'
+                exclude 'com/yasirkula/**'
+            }
+            jniLibs.srcDirs = ['src/main/lib']
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.android.play:core:1.10.3'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    include 'com/Yiming/**'
+    include 'com/unity/**'
+    include 'com/unity3d/**'
+    include 'com/google/androidgamesdk/**'
+    include 'com/google/android/gms/games/Games.java'
+    include 'com/android/billingclient/api/PurchasesUpdatedListener.java'
+    include 'bitter/**'
+    include 'org/fmod/**'
+    exclude 'com/yasirkula/**'
+}
